@@ -19,3 +19,5 @@ Default module: importing of requests and printing/returning of this message
 /home/posydon/shrimp/modules/undefined.py
 /home/posydon/shrimp/modules/default.py
 Default module: importing of requests and printing/returning of this message
+/home/posydon/shrimp/modules/default.py
+Default module: importing of requests and printing/returning of this message
