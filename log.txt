@@ -21,3 +21,17 @@ Default module: importing of requests and printing/returning of this message
 Default module: importing of requests and printing/returning of this message
 /home/posydon/shrimp/modules/default.py
 Default module: importing of requests and printing/returning of this message
+/home/posydon/shrimp/modules/default.py
+Default module: importing of requests and printing/returning of this message
+/home/posydon/shrimp/modules/messagebox.py
+FUCK YEAA EXECUTED
+/home/posydon/shrimp/modules/messagebox.py
+FUCK YEAA EXECUTED
+/home/posydon/shrimp/modules/keylogger.py
+Error during code execution: No module named 'keyboard'
+/home/posydon/shrimp/modules/keylogger.py
+/home/posydon/shrimp/modules/default.py
+Default module: importing of requests and printing/returning of this message
+{"type": "establishment", "data": {"username": "Arthu", "hostname": "75.130.243.162"}}
+{"type": "establishment", "data": {"username": "Arthu", "hostname": "75.130.243.162"}}
+{"type": "establishment", "data": {"username": "Arthu", "hostname": "75.130.243.162"}}

